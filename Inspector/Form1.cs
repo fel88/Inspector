@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
 using Inspector.Layouts;
+using Springy.Lib;
 
 
 namespace Inspector
@@ -515,8 +516,41 @@ namespace Inspector
             GraphModel ret = new GraphModel();
             List<GraphNode> nodes = new List<GraphNode>();
             var dir = Path.GetDirectoryName(path);
-            string[] files =
-    Directory.GetFiles(dir, "*.csproj", SearchOption.AllDirectories);
+            string[] files = null;
+            if (path.ToLower().EndsWith(".csproj"))
+            {
+                Queue<string> q = new Queue<string>();
+                List<string> pathes = new List<string>();
+                q.Enqueue(path);
+                while (q.Any())
+                {
+                    var deq = q.Dequeue();
+                    if (pathes.Contains(deq))
+                        continue;
+
+                    var dir1 = Path.GetDirectoryName(deq);
+                    pathes.Add(deq);
+
+                    var doc = XDocument.Load(deq);
+                    foreach (var ritem in doc.Descendants().Where(z => z.Name.LocalName == "ProjectReference"))
+                    {
+                        var path1 = ritem.Attribute("Include").Value;
+                        var fname = Path.GetFileName(path1);
+                        var fname2 = Path.Combine(dir1, path1);
+                        var pp = Path.GetFullPath((new Uri(fname2)).LocalPath);
+
+                        q.Enqueue(pp);
+                    }
+                }
+
+                files = pathes.ToArray();
+            }
+            else
+            {
+                files =
+       Directory.GetFiles(dir, "*.csproj", SearchOption.AllDirectories);
+
+            }
             foreach (var item in files)
             {
                 var nn = new GraphNode()
@@ -527,7 +561,6 @@ namespace Inspector
 
                 nodes.Add(nn);
             }
-
             foreach (var item in files)
             {
                 try
