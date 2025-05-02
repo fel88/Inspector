@@ -864,5 +864,23 @@ namespace Inspector
             dtag.Height = (float)d.GetNumericField("height");
 
         }
+
+        private void navigateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (selected == null)
+                return;
+
+            Program.MainForm.LoadModel(selected.FilePath);
+        }
+
+        private void upTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

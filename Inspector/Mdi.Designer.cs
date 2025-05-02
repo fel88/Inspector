@@ -42,6 +42,7 @@
             aboutToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
+            directoryToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -58,17 +59,17 @@
             // 
             // modelToolStripMenuItem
             // 
-            modelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadToolStripMenuItem });
+            modelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadToolStripMenuItem, directoryToolStripMenuItem });
             modelToolStripMenuItem.Name = "modelToolStripMenuItem";
-            modelToolStripMenuItem.Size = new Size(56, 20);
-            modelToolStripMenuItem.Text = "Project";
+            modelToolStripMenuItem.Size = new Size(45, 20);
+            modelToolStripMenuItem.Text = "Load";
             modelToolStripMenuItem.Click += modelToolStripMenuItem_Click;
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.Size = new Size(180, 22);
-            loadToolStripMenuItem.Text = "Load";
+            loadToolStripMenuItem.Text = "Project";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
             // layoutToolStripMenuItem
@@ -142,6 +143,13 @@
             toolStripStatusLabel1.Size = new Size(13, 17);
             toolStripStatusLabel1.Text = "..";
             // 
+            // directoryToolStripMenuItem
+            // 
+            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
+            directoryToolStripMenuItem.Size = new Size(180, 22);
+            directoryToolStripMenuItem.Text = "Directory";
+            directoryToolStripMenuItem.Click += directoryToolStripMenuItem_Click;
+            // 
             // Mdi
             // 
             AllowDrop = true;
@@ -182,5 +190,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripMenuItem directoryToolStripMenuItem;
     }
 }

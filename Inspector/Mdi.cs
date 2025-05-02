@@ -39,7 +39,7 @@ namespace Inspector
                             Form1.DefaultLayout = typeof(DagreGraphLayout);
                         }
                         break;
-                  
+
                 }
             }
 
@@ -79,7 +79,7 @@ namespace Inspector
                 {
                     if (item is Form1 f)
                     {
-                      
+
                     }
                 }
 
@@ -87,16 +87,6 @@ namespace Inspector
             return frm;
         }
 
-        private void multidocumentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void singleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-
-        }
 
         private void Mdi_DragDrop(object sender, DragEventArgs e)
         {
@@ -106,7 +96,7 @@ namespace Inspector
 
         }
 
-        void LoadModel(string ar)
+        public void LoadModel(string ar)
         {
             //if (IsMdiContainer)
             {
@@ -148,7 +138,8 @@ namespace Inspector
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "All files (*.*)|*.*";
+            ofd.Filter = "csproj files (*.csproj)|*.csproj|All files (*.*)|*.*";
+
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -204,8 +195,8 @@ namespace Inspector
 
         }
 
-     
-        
+
+
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -213,15 +204,19 @@ namespace Inspector
             ab.ShowDialog();
         }
 
-        private void managerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-         
-        }
-
-        private void simpleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
             
-          
+        private void directoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Choose any file from directory";
+
+            ofd.Filter = "All files (*.*)|*.*";
+
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+
+            LoadModel(ofd.FileName);
         }
     }
 }
