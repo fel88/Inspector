@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoDialog" Version="1.0.0.7" />
     <PackageReference Include="Dagre.NET" Version="1.0.0.6" />
     <PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
     <PackageReference Include="SkiaSharp.Views.WindowsForms" Version="3.119.0" />

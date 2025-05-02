@@ -45,6 +45,7 @@
             showVerticalToolStripMenuItem = new ToolStripMenuItem();
             showHorizontalToolStripMenuItem = new ToolStripMenuItem();
             timer1 = new System.Windows.Forms.Timer(components);
+            editToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             contextMenuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -68,14 +69,14 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem, editToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(107, 26);
+            contextMenuStrip1.Size = new Size(181, 70);
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(106, 22);
+            deleteToolStripMenuItem.Size = new Size(180, 22);
             deleteToolStripMenuItem.Text = "delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
@@ -137,7 +138,7 @@
             // dagreToolStripMenuItem
             // 
             dagreToolStripMenuItem.Name = "dagreToolStripMenuItem";
-            dagreToolStripMenuItem.Size = new Size(180, 22);
+            dagreToolStripMenuItem.Size = new Size(104, 22);
             dagreToolStripMenuItem.Text = "dagre";
             dagreToolStripMenuItem.Click += dagreToolStripMenuItem_Click;
             // 
@@ -186,6 +187,13 @@
             timer1.Interval = 50;
             timer1.Tick += timer1_Tick;
             // 
+            // editToolStripMenuItem
+            // 
+            editToolStripMenuItem.Name = "editToolStripMenuItem";
+            editToolStripMenuItem.Size = new Size(180, 22);
+            editToolStripMenuItem.Text = "edit";
+            editToolStripMenuItem.Click += editToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             AllowDrop = true;
@@ -223,6 +231,7 @@
         private System.Windows.Forms.ToolStripMenuItem showHorizontalToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem editToolStripMenuItem;
     }
 }
 

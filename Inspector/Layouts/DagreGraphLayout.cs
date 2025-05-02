@@ -166,8 +166,10 @@ namespace Inspector.Layouts
             DagreInputGraph d = new DagreInputGraph();
             d.VerticalLayout = VerticalLayout;
             updateNodesSizes(model);
+            var temp = model.Nodes.ToList();
 
-            model.Nodes = model.Nodes.ToList();
+            model.Nodes = model.Nodes.Where(z=>z.Childs.Any() || z.Parents.Any()).ToList();
+            
 
 
 
@@ -220,6 +222,9 @@ namespace Inspector.Layouts
             foreach (var item in d.Edges())
             {
                 var pnts = item.Points;
+                if (item.Points == null)
+                    continue;
+
                 List<PointF> rr = new List<PointF>();
                 foreach (var itemz in pnts)
                 {
@@ -229,6 +234,7 @@ namespace Inspector.Layouts
                 enodes.Add(new EdgeNode(rr.ToArray()));
             }
             model.Edges = enodes.ToArray();
+            model.Nodes = temp;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Inspector
             pictureBox1.SetDoubleBuffered(true);
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             ctx.Redraw = Redraw;
-            
+
             CurrentLayout = Activator.CreateInstance(DefaultLayout) as GraphLayout;
 
             pictureBox1.Focus();
@@ -48,7 +48,7 @@ namespace Inspector
         private void Rc_MouseDown(object? sender, MouseEventArgs e)
         {
             //if (hovered == null)
-               // return;
+            // return;
 
             selected = hovered;
             ShowInfoTab();
@@ -66,7 +66,7 @@ namespace Inspector
         MessageFilter mf = null;
         private void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-         
+
 
         }
 
@@ -120,7 +120,7 @@ namespace Inspector
 
         internal void StopDrawThread()
         {
-           // exitRequired = true;
+            // exitRequired = true;
             reset.Set();
         }
 
@@ -160,7 +160,7 @@ namespace Inspector
 
         public void UpdateInfo()
         {
-           
+
 
         }
 
@@ -176,7 +176,7 @@ namespace Inspector
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             //if (hovered == null)
-               // return;
+            // return;
 
             selected = hovered;
             ShowInfoTab();
@@ -273,7 +273,7 @@ namespace Inspector
 
                 if (selected != null)
                 {
-                    ctx.DrawString(selected.FilePath, new Font(SystemFonts.DefaultFont.FontFamily,12),Brushes.Black, 10, 10);
+                    ctx.DrawString(selected.FilePath, new Font(SystemFonts.DefaultFont.FontFamily, 12), Brushes.Black, 10, 10);
                 }
 
             }
@@ -433,9 +433,9 @@ namespace Inspector
             }
         }
 
-        
+
         AutoResetEvent reset = new AutoResetEvent(true);
-                
+
 
 
         IDrawingContext ctx = new DoubleBufferedDrawingContext();
@@ -522,7 +522,7 @@ namespace Inspector
                 var nn = new GraphNode()
                 {
                     Name = Path.GetFileName(item),
-                    FilePath = item,                    
+                    FilePath = item,
                 };
 
                 nodes.Add(nn);
@@ -727,7 +727,7 @@ namespace Inspector
                 }
             }
             bool exit = true;
-            
+
         }
         private void toolStripButton1_Click_1(object sender, EventArgs e)
         {
@@ -777,7 +777,7 @@ namespace Inspector
         {
             CurrentLayout.VerticalLayout = false;
             CurrentLayout.Layout(Model);
-                fitAll();
+            fitAll();
 
             //if (File.Exists(_lastPath))
             //{
@@ -786,7 +786,7 @@ namespace Inspector
             //}
         }
 
-        
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -805,6 +805,31 @@ namespace Inspector
             }
             Model.Nodes.Remove(selected);
             CurrentLayout.Layout(Model);
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (selected == null)
+                return;
+
+            var dtag = selected.DrawTag as GraphNodeDrawInfo;
+            if (dtag == null)
+                return;
+
+            var d = AutoDialog.DialogHelpers.StartDialog();
+            d.AddNumericField("posx", "X", dtag.Rect.X, 100000, -100000);
+            d.AddNumericField("posy", "Y", dtag.Rect.Y, 100000, -100000);
+            d.AddNumericField("width", "X", dtag.Rect.Width, 100000, -100000);
+            d.AddNumericField("height", "X", dtag.Rect.Height, 100000, -100000);
+
+            if (!d.ShowDialog())
+                return;
+
+            dtag.X = (float)d.GetNumericField("posx");
+            dtag.Y = (float)d.GetNumericField("posy");
+            dtag.Width = (float)d.GetNumericField("width");
+            dtag.Height = (float)d.GetNumericField("height");
+
         }
     }
 }
