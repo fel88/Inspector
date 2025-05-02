@@ -1,4 +1,3 @@
 # Inspector
 .Net graph dependency viewer
-
-![image](https://github.com/user-attachments/assets/4e2a9984-1a73-44e4-bdce-f4d2e21b1e78)
+![image](https://github.com/user-attachments/assets/b1e8672b-7427-4d8d-ab62-5293c4910639)
