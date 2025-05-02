@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <RootNamespace>Inspector</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>Inspector.Program</StartupObject>
+    <Company>https://github.com/fel88</Company>
+    <Authors>fel88</Authors>
+    <Copyright>Copyleft ©  2020-2025</Copyright>
+    <Description>&gt;.net C# dependency graph inspector</Description>
+    <Product></Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="settings.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="settings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dagre.NET" Version="1.0.0.6" />
+    <PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
+    <PackageReference Include="SkiaSharp.Views.WindowsForms" Version="3.119.0" />
+    <PackageReference Include="Springy.NET" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ExpandControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Form1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Mdi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MdiChildForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="WaitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
