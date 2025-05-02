@@ -165,6 +165,8 @@ namespace Inspector.Layouts
             }
             DagreInputGraph d = new DagreInputGraph();
             d.VerticalLayout = VerticalLayout;
+            
+
             updateNodesSizes(model);
             var temp = model.Nodes.ToList();
 

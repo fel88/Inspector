@@ -30,6 +30,7 @@ namespace Inspector
             ctx.Redraw = Redraw;
 
             CurrentLayout = Activator.CreateInstance(DefaultLayout) as GraphLayout;
+            CurrentLayout.VerticalLayout = VerticalLayout;
 
             pictureBox1.Focus();
             pictureBox1.MouseMove += PictureBox1_MouseMove;
@@ -791,11 +792,12 @@ namespace Inspector
         }
 
 
+        public static bool VerticalLayout = false;
 
 
         private void showVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CurrentLayout.VerticalLayout = true;
+            CurrentLayout.VerticalLayout = VerticalLayout = true;
             CurrentLayout.Layout(Model);
             fitAll();
 
@@ -808,7 +810,7 @@ namespace Inspector
 
         private void showHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CurrentLayout.VerticalLayout = false;
+            CurrentLayout.VerticalLayout = VerticalLayout = false;
             CurrentLayout.Layout(Model);
             fitAll();
 
@@ -880,7 +882,7 @@ namespace Inspector
 
         private void upTreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
