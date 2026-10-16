@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using Inspector.Extensions;
+using System.IO.Compression;
 
 namespace Inspector
 {

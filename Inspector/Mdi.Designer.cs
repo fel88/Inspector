@@ -32,6 +32,7 @@
             menuStrip1 = new MenuStrip();
             modelToolStripMenuItem = new ToolStripMenuItem();
             loadToolStripMenuItem = new ToolStripMenuItem();
+            directoryToolStripMenuItem = new ToolStripMenuItem();
             layoutToolStripMenuItem = new ToolStripMenuItem();
             windowsToolStripMenuItem = new ToolStripMenuItem();
             closeAllToolStripMenuItem = new ToolStripMenuItem();
@@ -42,7 +43,6 @@
             aboutToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
-            directoryToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -60,8 +60,9 @@
             // modelToolStripMenuItem
             // 
             modelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadToolStripMenuItem, directoryToolStripMenuItem });
+            modelToolStripMenuItem.Image = Properties.Resources.disc;
             modelToolStripMenuItem.Name = "modelToolStripMenuItem";
-            modelToolStripMenuItem.Size = new Size(45, 20);
+            modelToolStripMenuItem.Size = new Size(61, 20);
             modelToolStripMenuItem.Text = "Load";
             modelToolStripMenuItem.Click += modelToolStripMenuItem_Click;
             // 
@@ -71,6 +72,14 @@
             loadToolStripMenuItem.Size = new Size(180, 22);
             loadToolStripMenuItem.Text = "Project";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
+            // 
+            // directoryToolStripMenuItem
+            // 
+            directoryToolStripMenuItem.Image = Properties.Resources.folder;
+            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
+            directoryToolStripMenuItem.Size = new Size(180, 22);
+            directoryToolStripMenuItem.Text = "Directory";
+            directoryToolStripMenuItem.Click += directoryToolStripMenuItem_Click;
             // 
             // layoutToolStripMenuItem
             // 
@@ -142,13 +151,6 @@
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             toolStripStatusLabel1.Size = new Size(13, 17);
             toolStripStatusLabel1.Text = "..";
-            // 
-            // directoryToolStripMenuItem
-            // 
-            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
-            directoryToolStripMenuItem.Size = new Size(180, 22);
-            directoryToolStripMenuItem.Text = "Directory";
-            directoryToolStripMenuItem.Click += directoryToolStripMenuItem_Click;
             // 
             // Mdi
             // 

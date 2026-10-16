@@ -18,12 +18,18 @@ namespace Inspector
         }
         public PointF[] Points;
         Curve curve;
+        public bool Selected;
+        public GraphNode From;
+        public GraphNode To;
 
         public void Draw(IDrawingContext ctx)
         {
             var size = 4 * ctx.zoom;
             AdjustableArrowCap bigArrow = new AdjustableArrowCap(size, size, true);
             Pen pen1 = new Pen(Color.Black);
+            if (Selected)
+                pen1 = new Pen(Color.Red); 
+
             pen1.CustomEndCap = bigArrow;
             ctx.PushMatrix();
             //var temp = ctx.Transform;

@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml.Linq;
 using Inspector.Layouts;
 using Springy.Lib;
-
+using Inspector.Extensions;
 
 namespace Inspector
 {
@@ -211,6 +211,7 @@ namespace Inspector
             if (Model.Edges != null && CurrentLayout.EdgesDrawAllowed)
                 foreach (var item in Model.Edges)
                 {
+                    item.Selected = item.From == selected || item.To == selected;
                     item.Draw(ctx);
                 }
             else
@@ -463,7 +464,14 @@ namespace Inspector
             Action loadAct = () =>
             {
                 sw.Start();
-                var model = LoadFromFile(path);
+
+                var files = GetFilesList(path);
+                //filer here
+                AssembliesSelectorDialog selectorDialog = new AssembliesSelectorDialog();
+                selectorDialog.Init(files);
+                selectorDialog.ShowDialog();
+                files = selectorDialog.Files;
+                var model = GenerateGraphModelFromFiles(files);
                 Model = model;
                 if (!loadedModels.Any(z => z.ToLower() == path.ToLower()))
                 {
@@ -505,7 +513,7 @@ namespace Inspector
             timer1.Enabled = true;
             if (wd.Exception != null)
             {
-                Extensions.ShowError(wd.Exception.Message, Program.MainForm.Text);
+                DialogsHelpers.ShowError(wd.Exception.Message, Program.MainForm.Text);
             }
             Program.MainForm.SetStatusMessage($"Load time: {sw.ElapsedMilliseconds} ms");
 
@@ -514,8 +522,12 @@ namespace Inspector
 
         private GraphModel LoadFromFile(string path)
         {
-            GraphModel ret = new GraphModel();
-            List<GraphNode> nodes = new List<GraphNode>();
+            var files = GetFilesList(path);
+            return GenerateGraphModelFromFiles(files);
+        }
+
+        public string[] GetFilesList(string path)
+        {
             var dir = Path.GetDirectoryName(path);
             string[] files = null;
             if (path.ToLower().EndsWith(".csproj"))
@@ -547,11 +559,14 @@ namespace Inspector
                 files = pathes.ToArray();
             }
             else
-            {
-                files =
-       Directory.GetFiles(dir, "*.csproj", SearchOption.AllDirectories);
+                files = Directory.GetFiles(dir, "*.csproj", SearchOption.AllDirectories);
+            return files;
+        }
 
-            }
+        private static GraphModel GenerateGraphModelFromFiles(string[] files)
+        {
+            List<GraphNode> nodes = new List<GraphNode>();
+
             foreach (var item in files)
             {
                 var nn = new GraphNode()
@@ -562,6 +577,7 @@ namespace Inspector
 
                 nodes.Add(nn);
             }
+
             foreach (var item in files)
             {
                 try
@@ -573,8 +589,9 @@ namespace Inspector
                     {
                         var path1 = ritem.Attribute("Include").Value;
                         var fname = Path.GetFileName(path1);
-                        var fr = nodes.First(z => z.Name == fname);
-                        fr.AttachChild(node);
+                        var fr = nodes.FirstOrDefault(z => z.Name == fname);
+                        if (fr != null)
+                            fr.AttachChild(node);
                     }
                 }
                 catch (Exception ex)
@@ -583,9 +600,8 @@ namespace Inspector
                 }
             }
 
-
+            GraphModel ret = new GraphModel();
             ret.Nodes = nodes.ToList();
-
             return ret;
         }
 
@@ -677,7 +693,6 @@ namespace Inspector
                  case DialogResult.Cancel:
                      break;
              }*/
-
         }
 
         private void fromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -753,7 +768,7 @@ namespace Inspector
             if (selected == null) return;
             if (selected is GroupNode g)
             {
-                if (Extensions.ShowQuestion($"Expand group {g.Prefix}?", ParentForm.Text) == DialogResult.Yes)
+                if (DialogsHelpers.ShowQuestion($"Expand group {g.Prefix}?", ParentForm.Text))
                 {
                     CurrentLayout.RequestedGroups.RemoveAll(z => z.Prefix == g.Prefix);
                     LoadModel(_lastPath, false);
@@ -832,8 +847,25 @@ namespace Inspector
 
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Delete)
+            {
+                DeleteSelectedUI();
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DeleteSelectedUI();
+        }
+
+        public void DeleteSelectedUI()
+        {
+            if (!$"Are you sure to delete: {selected.Name}?".ShowQuestion(Text))
+                return;
+
             foreach (var item in selected.Parents)
             {
                 item.Childs.Remove(selected);

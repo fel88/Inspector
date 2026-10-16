@@ -1,5 +1,8 @@
-﻿using Dagre;
+﻿using AutoDialog;
+using Dagre;
+using Inspector.Extensions;
 using Inspector.Lib;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -165,23 +168,21 @@ namespace Inspector.Layouts
             }
             DagreInputGraph d = new DagreInputGraph();
             d.VerticalLayout = VerticalLayout;
-            
+
 
             updateNodesSizes(model);
             var temp = model.Nodes.ToList();
 
-            model.Nodes = model.Nodes.Where(z=>z.Childs.Any() || z.Parents.Any()).ToList();
-            
-
-
+            model.Nodes = model.Nodes.Where(z => z.Childs.Any() || z.Parents.Any()).ToList();
 
             var list1 = model.Nodes.ToList();
 
-
+            Dictionary<DagreInputNode, GraphNode> bmap = new Dictionary<DagreInputNode, GraphNode>();
             foreach (var gg in list1)
             {
                 var tag = (gg.DrawTag as GraphNodeDrawInfo);
-                d.AddNode(gg, tag.Rect.Width, tag.Rect.Height);
+                var ret = d.AddNode(gg, tag.Rect.Width, tag.Rect.Height);
+                bmap.Add(ret, gg);
             }
 
             foreach (var gg in list1)
@@ -202,15 +203,22 @@ namespace Inspector.Layouts
             }
             catch (Exception ex)
             {
-                Extensions.ShowError(ex.Message, "Error");
+                DialogsHelpers.ShowError(ex.Message, "Error");
             }
 
+            List<(DagreInputEdge, DagreInputNode, DagreInputNode)> map = new();
             //back
             foreach (var n in model.Nodes)
             {
                 var nd = d.GetNode(n);
                 if (nd == null)
                     continue;
+
+                foreach (var item in nd.Parents)
+                {
+                    var edge1 = d.GetEdge(item, nd);
+                    map.Add((edge1, item, nd));
+                }
 
                 var tag = (n.DrawTag as GraphNodeDrawInfo);
                 var xx = nd.X;
@@ -232,9 +240,11 @@ namespace Inspector.Layouts
                 {
                     rr.Add(new PointF(itemz.X, itemz.Y));
                 }
+                var fr = map.First(z => z.Item1 == item);
 
-                enodes.Add(new EdgeNode(rr.ToArray()));
+                enodes.Add(new EdgeNode(rr.ToArray()) { From = bmap[fr.Item2], To = bmap[fr.Item3] });
             }
+
             model.Edges = enodes.ToArray();
             model.Nodes = temp;
         }

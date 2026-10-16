@@ -1,5 +1,6 @@
 ﻿
 
+using Inspector.Extensions;
 using Inspector.Layouts;
 using System.Reflection;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace Inspector
             }
             catch (Exception ex)
             {
-                Extensions.ShowError(ex.Message, Text);
+                DialogsHelpers.ShowError(ex.Message, Text);
             }
         }
 
